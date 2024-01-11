@@ -51,7 +51,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -83,7 +83,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 1657fb73628ade947962b9047b8efd40,
+    m_Motion: {fileID: -203655887218126122, guid: 81bd846b0684c424f9f6a91ed0e8dd2e,
       type: 3}
     m_Threshold: 2.5
     m_Position: {x: 0, y: 0}
