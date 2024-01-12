@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ShootingSystem : MonoBehaviour
 {
-
-    [SerializeField] private GameObject _shootingTarget ;
-    [SerializeField] private GameObject _target ;
-    [SerializeField] private float _maxShootDistance = 300f;
-        
     private StarterAssetsInputs _inputs;
     private Camera _mainCamera;
     
+    [Header("Shooting Value")]
+    public float maxShootDistance = 300f;
+    
+    [Header("Start And End of Ray")]
+    public GameObject rayStart ;
+    public GameObject rayEnd ;
     
     // Start is called before the first frame update
     void Start()
@@ -26,24 +28,24 @@ public class ShootingSystem : MonoBehaviour
     {
         if (_inputs.isShooting)
         {
-            _shootingTarget.SetActive(true);
-            _target.SetActive(true);
+            rayStart.SetActive(true);
+            rayEnd.SetActive(true);
             
-            Vector3 shootPoint = _mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, _maxShootDistance));
+            Vector3 shootPoint = _mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, maxShootDistance));
             
-            Ray ray = new Ray(_shootingTarget.transform.position, shootPoint - _target.transform.position);
+            Ray ray = new Ray(rayStart.transform.position, shootPoint - rayEnd.transform.position);
             
-            Debug.DrawRay(ray.origin, ray.direction * _maxShootDistance, Color.magenta, 0.5f);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, _maxShootDistance))
+            Debug.DrawRay(ray.origin, ray.direction * maxShootDistance, Color.magenta, 0.5f);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, maxShootDistance))
             {
-                _target.transform.position = hitInfo.point;
+                rayEnd.transform.position = hitInfo.point;
                 //hitInfo.collider.gameObject.CompareTag("Target");
             }
         }
         else
         {
-            _shootingTarget.SetActive(false);
-            _target.SetActive(false);
+            rayStart.SetActive(false);
+            rayEnd.SetActive(false);
         }
     }
 }

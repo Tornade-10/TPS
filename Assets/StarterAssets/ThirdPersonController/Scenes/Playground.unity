@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 337319729}
   - component: {fileID: 337319728}
   m_Layer: 8
-  m_Name: Target
+  m_Name: RayEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,7 +253,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337319726}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -602,7 +602,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 1391986371}
   - component: {fileID: 1391986370}
   m_Layer: 8
-  m_Name: Gun
+  m_Name: RayStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1469,9 +1469,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0310b3f93b7739f4a9b9fdacc0cb3176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shootingTarget: {fileID: 1391986368}
-  _target: {fileID: 337319726}
-  _maxShootDistance: 300
+  maxShootDistance: 300
+  rayStart: {fileID: 1391986368}
+  rayEnd: {fileID: 337319726}
 --- !u!1 &1764214107
 GameObject:
   m_ObjectHideFlags: 0
