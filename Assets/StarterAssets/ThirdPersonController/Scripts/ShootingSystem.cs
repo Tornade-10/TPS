@@ -37,7 +37,7 @@ public class ShootingSystem : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hitInfo, _maxShootDistance))
             {
                 _target.transform.position = hitInfo.point;
-                hitInfo.collider.gameObject.CompareTag("Target");
+                //hitInfo.collider.gameObject.CompareTag("Target");
             }
         }
         else
