@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using StarterAssets;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,13 +16,22 @@ public class Weapon : MonoBehaviour
     public ParticleSystem impactParticleSystem;
     public TrailRenderer bulletTraill;
     public float shootDelay = 0.5f;
+    private StarterAssetsInputs _inputs;
 
     public float lastShootTime;
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        _inputs = GetComponent<StarterAssetsInputs>();
+    }
+
+    private void Update()
+    {
+        if (_inputs.isShooting)
+        {
+            Shoot();
+        }
     }
 
     public void Shoot()
@@ -54,6 +65,24 @@ public class Weapon : MonoBehaviour
         }
 
         return direction;
+    }
+
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
+    {
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+
+        while (time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
+            time += Time.deltaTime / trail.time;
+            yield return null;
+        }
+
+        trail.transform.position = hit.point;
+        Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+        
+        Destroy(trail.gameObject, trail.time);
     }
 }
 

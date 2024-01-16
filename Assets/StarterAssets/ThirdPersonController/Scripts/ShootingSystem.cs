@@ -15,10 +15,6 @@ public class ShootingSystem : MonoBehaviour
     [Header("Start And End of Ray")]
     public GameObject rayStart ;
     public GameObject rayEnd ;
-
-    [Header("The Bullet")] 
-    public GameObject bullet;
-    public float speed = 5f;
     
     // Start is called before the first frame update
     void Start()
@@ -38,8 +34,6 @@ public class ShootingSystem : MonoBehaviour
             Vector3 shootPoint = _mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, maxShootDistance));
             
             Ray ray = new Ray(rayStart.transform.position, shootPoint - rayEnd.transform.position);
-
-            Bullet();
             
             Debug.DrawRay(ray.origin, ray.direction * maxShootDistance, Color.magenta, 0.5f);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, maxShootDistance))
@@ -54,10 +48,4 @@ public class ShootingSystem : MonoBehaviour
             rayEnd.SetActive(false);
         }
     }
-    
-    void Bullet()
-    {
-        Instantiate(bullet, rayStart.transform.position, rayEnd.transform.rotation);
-    }
-    
 }

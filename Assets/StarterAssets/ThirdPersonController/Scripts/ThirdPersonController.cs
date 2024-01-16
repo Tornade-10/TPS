@@ -273,7 +273,7 @@ namespace StarterAssets
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
             
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-            // if there is a move input rotate player when the player is moving
+            // if there is a move input rotate player when the player is moving or if he is aiming/firing make him strife
             if (_input.move != Vector2.zero && !_input.isAiming && !_input.isShooting)
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
@@ -287,6 +287,7 @@ namespace StarterAssets
             }
             else if(_input.isAiming || _input.isShooting)
             {
+                // make the player look in the direction of the camera
                 _targetRotation = _mainCamera.transform.eulerAngles.y;
                 float rotation = _targetRotation;
                 
