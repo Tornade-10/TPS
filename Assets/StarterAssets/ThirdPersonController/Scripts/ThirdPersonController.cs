@@ -27,7 +27,7 @@ namespace StarterAssets
         public float RotationSmoothTime = 0.12f;
         
         [Tooltip("Where the character is facing")]
-        private Vector3 targetDirection;
+        public Vector3 targetDirection;
 
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
@@ -106,6 +106,9 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
+        private int _animIDAiming;
+        private int _animIDXAxis;
+        private int _animIDYAxis;
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
@@ -183,6 +186,9 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDAiming = Animator.StringToHash("Aiming");
+            _animIDXAxis = Animator.StringToHash("XMovement");
+            _animIDYAxis = Animator.StringToHash("YMovement");
         }
 
         private void GroundedCheck()
@@ -306,6 +312,10 @@ namespace StarterAssets
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                _animator.SetBool(_animIDAiming, _input.isAiming || _input.isShooting);
+                _animator.SetFloat(_animIDXAxis, _input.move.x);
+                _animator.SetFloat(_animIDXAxis, _input.move.y);
+                
             }
         }
         

@@ -12,40 +12,68 @@ public class ShootingSystem : MonoBehaviour
     [Header("Shooting Value")]
     public float maxShootDistance = 300f;
     
-    [Header("Start And End of Ray")]
+    [Header("Debug and UI")]
     public GameObject rayStart ;
     public GameObject rayEnd ;
+    public GameObject CrossHair;
+    
+    [Header("Bullet")] 
+    public GameObject bullet;
+    public float bulletVelocity;
+    public int bulletPerShot;
+    
+    [Header("FX And SFX")] 
+    public GameObject flash;
+    public AudioClip gunShot;
+    public AudioSource audioSource;
     
     // Start is called before the first frame update
     void Start()
     {
         _inputs = GetComponent<StarterAssetsInputs>();
         _mainCamera = Camera.main;
+        
+        flash.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (_inputs.isAiming)
+        {
+            CrossHair.SetActive(true);
+        }
+        else
+        {
+            CrossHair.SetActive(false);
+        }
+        
         if (_inputs.isShooting)
         {
-            rayStart.SetActive(true);
-            rayEnd.SetActive(true);
+            Vector3 shootPoint = _mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0f, maxShootDistance));
             
-            Vector3 shootPoint = _mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, maxShootDistance));
+            flash.SetActive(true);
             
             Ray ray = new Ray(rayStart.transform.position, shootPoint - rayEnd.transform.position);
+
+            audioSource.PlayOneShot(gunShot);
+            for (int i = 0; i < bulletPerShot; i++)
+            {
+                GameObject currentBullet = Instantiate(bullet, rayStart.transform.position, rayStart.transform.rotation);
+                Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
+                rb.AddForce(rayStart.transform.forward * bulletVelocity, ForceMode.Impulse);
+            }
             
             Debug.DrawRay(ray.origin, ray.direction * maxShootDistance, Color.magenta, 0.5f);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, maxShootDistance))
             {
                 rayEnd.transform.position = hitInfo.point;
-                //hitInfo.collider.gameObject.CompareTag("Target");
             }
         }
         else
         {
-            rayStart.SetActive(false);
-            rayEnd.SetActive(false);
+            flash.SetActive(false);
         }
     }
 }
